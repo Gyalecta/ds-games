@@ -1,0 +1,20 @@
+# Eclipse
+.classpath
+.project
+.settings/
+.factorypath
+
+# Maven
+target/
+*.class
+
+# IntelliJ (per sicurezza)
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Credenziali locali (non pushare mai)
+src/main/webapp/META-INF/context.xml
