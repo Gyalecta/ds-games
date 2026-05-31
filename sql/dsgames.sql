@@ -1,5 +1,3 @@
--- Script SQL per la definizione dello schema
-
 CREATE DATABASE IF NOT EXISTS dsgames
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
