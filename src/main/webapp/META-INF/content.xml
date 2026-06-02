@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resource
+        name="jdbc/dsgames"
+        auth="Container"
+        type="javax.sql.DataSource"
+        maxActive="20"
+        minIdle="5"
+        maxIdle="10"
+        maxWait="10000"
+        username="root"
+        password="root1234"
+        driverClassName="com.mysql.cj.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/dsgames?useSSL=false&amp;serverTimezone=Europe/Rome&amp;allowPublicKeyRetrieval=true"
+    />
+</Context>
