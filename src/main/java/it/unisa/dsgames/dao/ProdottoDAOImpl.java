@@ -164,4 +164,18 @@ public class ProdottoDAOImpl implements ProdottoDAO {
             ps.executeUpdate();
         }
     }
+    
+    @Override
+    public List<String> doRetrieveDistinctPiattaforme() throws SQLException {
+        List<String> lista = new ArrayList<>();
+        String sql = "SELECT DISTINCT piattaforma FROM prodotto " +
+                     "WHERE eliminato = FALSE AND piattaforma IS NOT NULL " +
+                     "ORDER BY piattaforma";
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) lista.add(rs.getString("piattaforma"));
+        }
+        return lista;
+    }
 }

@@ -21,6 +21,9 @@ public interface ProdottoDAO {
 
     /** Restituisce i prodotti in offerta */
     List<Prodotto> doRetrieveInOfferta() throws SQLException;
+    
+    /** Restituisce l'elenco distinto delle piattaforme presenti nel catalogo */
+    List<String> doRetrieveDistinctPiattaforme() throws SQLException;
 
     /** Inserisce un nuovo prodotto */
     void doSave(Prodotto prodotto) throws SQLException;
