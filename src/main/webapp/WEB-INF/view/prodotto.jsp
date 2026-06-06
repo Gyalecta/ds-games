@@ -15,7 +15,7 @@
     <c:if test="${not empty prodotto}">
 
         <!-- Breadcrumb -->
-        <nav style="font-size:0.85rem; color:#666; margin-bottom:1.5rem;">
+        <nav style="font-size:0.85rem; color:#666; margin-bottom:1.5rem;" aria-label="Breadcrumb">
             <a href="${pageContext.request.contextPath}/">Home</a> /
             <a href="${pageContext.request.contextPath}/catalogo">Catalogo</a> /
             <a href="${pageContext.request.contextPath}/catalogo?categoria=${prodotto.categoria}">
@@ -24,8 +24,7 @@
             <span>${prodotto.nome}</span>
         </nav>
 
-        <div style="display:grid; grid-template-columns:1fr 1fr;
-                    gap:3rem; align-items:start;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start;">
 
             <!-- Immagine -->
             <div>
@@ -33,8 +32,8 @@
                     <c:when test="${not empty prodotto.immagine}">
                         <img src="${pageContext.request.contextPath}/images/prodotti/${prodotto.immagine}"
                              alt="${prodotto.nome}"
-                             style="width:100%; border-radius:var(--radius);
-                                    box-shadow:var(--shadow);">
+                             style="width:100%; border-radius:var(--radius); box-shadow:var(--shadow);"
+                             loading="lazy">
                     </c:when>
                     <c:otherwise>
                         <div style="width:100%; aspect-ratio:1; border-radius:var(--radius);
@@ -71,11 +70,11 @@
                         <c:when test="${prodotto.inOfferta}">
                             <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
                                 <span style="font-size:2.2rem; font-weight:800; color:var(--color-text);">
-                                    <fmt:formatNumber value="${prodotto.prezzoEffettivo}"
+                                    <fmt:formatNumber value="${prodotto.prezzoEffettivo}" 
                                         type="currency" currencySymbol="€"/>
                                 </span>
                                 <span style="font-size:1.2rem; text-decoration:line-through; color:#999;">
-                                    <fmt:formatNumber value="${prodotto.prezzo}"
+                                    <fmt:formatNumber value="${prodotto.prezzo}" 
                                         type="currency" currencySymbol="€"/>
                                 </span>
                                 <span class="badge-sale" style="font-size:0.85rem; padding:0.3rem 0.7rem;">
@@ -85,7 +84,7 @@
                         </c:when>
                         <c:otherwise>
                             <span style="font-size:2.2rem; font-weight:800;">
-                                <fmt:formatNumber value="${prodotto.prezzo}"
+                                <fmt:formatNumber value="${prodotto.prezzo}" 
                                     type="currency" currencySymbol="€"/>
                             </span>
                         </c:otherwise>
@@ -113,25 +112,28 @@
                     </c:choose>
                 </div>
 
-                <!-- Bottoni azione -->
+                <!-- Bottoni azione - VERSIONE CORRETTA -->
                 <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2rem;">
-                    <c:choose>
-                        <c:if test="${prodotto.quantita > 0}">
-                            <button class="btn btn-primary"
-                                    style="flex:1; text-align:center;"
-                                     onclick="aggiungiAlCarrello(${prodotto.id}, this)">
-                                🛒 Aggiungi al carrello
-                            </button>
-                        </c:if>
-                    </c:choose>
+                    
+                    <c:if test="${prodotto.quantita > 0 && not empty prodotto.id}">
+                        <button class="btn btn-primary"
+                                style="flex:1; text-align:center;"
+                                data-product-id="${prodotto.id}"
+                                onclick="aggiungiAlCarrello(this)"
+                                aria-label="Aggiungi ${prodotto.nome} al carrello">
+                            🛒 Aggiungi al carrello
+                        </button>
+                    </c:if>
 
-                    <c:if test="${not empty sessionScope.utente}">
+                    <c:if test="${not empty sessionScope.utente && not empty prodotto.id}">
                         <button class="btn"
-                            style="border:1px solid var(--color-border);"
-                            data-in-wishlist="false"
-                            title="Aggiungi alla lista desideri"
-                            onclick="toggleWishlist(${prodotto.id}, this)">
-                        🤍
+                                style="border:1px solid var(--color-border);"
+                                data-product-id="${prodotto.id}"
+                                data-in-wishlist="false"
+                                title="Aggiungi alla lista desideri"
+                                aria-label="Aggiungi alla lista desideri"
+                                onclick="toggleWishlist(this)">
+                            🤍
                         </button>
                     </c:if>
                 </div>
@@ -140,7 +142,9 @@
                 <div style="background:var(--color-card); border-radius:var(--radius);
                             padding:1.5rem; box-shadow:var(--shadow);">
                     <h3 style="margin-bottom:0.75rem; font-size:1rem;">Descrizione</h3>
-                    <p style="line-height:1.7; color:#444;">${prodotto.descrizione}</p>
+                    <p style="line-height:1.7; color:#444; white-space:pre-wrap;">
+                        <c:out value="${prodotto.descrizione}" escapeXml="true"/>
+                    </p>
                 </div>
 
             </div>
