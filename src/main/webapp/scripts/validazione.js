@@ -143,8 +143,46 @@ function initValidazioneLogin() {
     });
 }
 
-// Avvia le validazioni al caricamento della pagina
+// =============================================
+// VALIDAZIONE FORM CHECKOUT
+// =============================================
+function initValidazioneCheckout() {
+    const form = document.getElementById('formCheckout');
+    if (!form) return;
+
+    const campi = {
+        indirizzo: { min: 5,  msg: 'Inserisci un indirizzo valido (minimo 5 caratteri).' },
+        citta:     { regex: REGEX.nome, msg: 'Inserisci una città valida.' },
+        cap:       { regex: REGEX.cap,  msg: 'Il CAP deve essere composto da 5 cifre.' }
+    };
+
+    Object.keys(campi).forEach(id => {
+        const field = document.getElementById(id);
+        if (!field) return;
+        field.addEventListener('change', () => validateField(id, campi[id]));
+        field.addEventListener('blur',   () => validateField(id, campi[id]));
+    });
+
+    form.addEventListener('submit', function(e) {
+        let valid = true;
+        Object.keys(campi).forEach(id => {
+            if (!validateField(id, campi[id])) valid = false;
+        });
+
+        const pagamento = document.getElementById('metodoPagamento');
+        if (pagamento && !pagamento.value) {
+            showError('metodoPagamento', 'Seleziona un metodo di pagamento.');
+            valid = false;
+        } else if (pagamento) {
+            clearError('metodoPagamento');
+        }
+
+        if (!valid) e.preventDefault();
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     initValidazioneRegistrazione();
     initValidazioneLogin();
+    initValidazioneCheckout();
 });
