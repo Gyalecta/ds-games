@@ -87,7 +87,7 @@
 
             <div style="display:flex; justify-content:space-between;
                         align-items:center; margin-bottom:1rem;">
-                <span style="color:#666; font-size:0.9rem;">
+                <span id="contatoreProdotti" style="color:#666; font-size:0.9rem;">
                     <c:choose>
                         <c:when test="${empty prodotti}">Nessun prodotto trovato</c:when>
                         <c:otherwise>${prodotti.size()} prodotti trovati</c:otherwise>
@@ -110,7 +110,7 @@
                     </div>
                 </c:when>
                 <c:otherwise>
-                    <div class="products-grid">
+                    <<div class="products-grid" id="gridProdotti">>
                         <c:forEach var="p" items="${prodotti}">
                             <div class="product-card">
 
@@ -182,4 +182,5 @@
 </div>
 </main>
 
+<script src="${pageContext.request.contextPath}/scripts/ajax.js"></script>
 <%@ include file="common/footer.jsp" %>

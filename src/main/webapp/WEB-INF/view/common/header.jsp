@@ -8,7 +8,7 @@
     <title>${not empty pageTitle ? pageTitle : 'DS Games'}</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/main.css">
 </head>
-<body>
+<<body data-context="${pageContext.request.contextPath}">>
 
 <nav class="navbar">
     <div class="navbar-inner">

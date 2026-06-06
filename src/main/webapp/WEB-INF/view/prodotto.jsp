@@ -116,26 +116,23 @@
                 <!-- Bottoni azione -->
                 <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2rem;">
                     <c:choose>
-                        <c:when test="${prodotto.quantita > 0}">
-                            <a href="${pageContext.request.contextPath}/carrello?azione=aggiungi&idProdotto=${prodotto.id}"
-                               class="btn btn-primary" style="flex:1; text-align:center;">
+                        <c:if test="${prodotto.quantita > 0}">
+                            <button class="btn btn-primary"
+                                    style="flex:1; text-align:center;"
+                                     onclick="aggiungiAlCarrello(${prodotto.id}, this)">
                                 🛒 Aggiungi al carrello
-                            </a>
-                        </c:when>
-                        <c:otherwise>
-                            <button class="btn btn-primary" disabled
-                                    style="flex:1; opacity:0.5; cursor:not-allowed;">
-                                Esaurito
                             </button>
-                        </c:otherwise>
+                        </c:if>
                     </c:choose>
 
                     <c:if test="${not empty sessionScope.utente}">
-                        <a href="${pageContext.request.contextPath}/wishlist?azione=aggiungi&idProdotto=${prodotto.id}"
-                           class="btn" style="border:1px solid var(--color-border);"
-                           title="Aggiungi alla lista desideri">
-                            🤍
-                        </a>
+                        <button class="btn"
+                            style="border:1px solid var(--color-border);"
+                            data-in-wishlist="false"
+                            title="Aggiungi alla lista desideri"
+                            onclick="toggleWishlist(${prodotto.id}, this)">
+                        🤍
+                        </button>
                     </c:if>
                 </div>
 
@@ -154,4 +151,5 @@
 </div>
 </main>
 
+<script src="${pageContext.request.contextPath}/scripts/ajax.js"></script>
 <%@ include file="common/footer.jsp" %>
