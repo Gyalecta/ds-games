@@ -1,0 +1,134 @@
+package it.unisa.dsgames.control;
+
+import it.unisa.dsgames.dao.DAOFactory;
+import it.unisa.dsgames.dao.UtenteDAO;
+import it.unisa.dsgames.model.Utente;
+import it.unisa.dsgames.util.PasswordUtil;
+
+import javax.naming.NamingException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.sql.SQLException;
+
+@WebServlet("/profilo")
+public class ProfiloServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        HttpSession session = req.getSession(false);
+
+        if (session == null || session.getAttribute("utente") == null) {
+            resp.sendRedirect(req.getContextPath() + "/login?redirect=profilo");
+            return;
+        }
+
+        req.getRequestDispatcher("/WEB-INF/view/profilo.jsp")
+           .forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        HttpSession session = req.getSession(false);
+
+        if (session == null || session.getAttribute("utente") == null) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
+
+        // Controllo token
+        String token = req.getParameter("token");
+        if (token == null || !token.equals(session.getAttribute("token"))) {
+            resp.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+
+        Utente utente = (Utente) session.getAttribute("utente");
+
+        String nome      = req.getParameter("nome");
+        String cognome   = req.getParameter("cognome");
+        String indirizzo = req.getParameter("indirizzo");
+        String citta     = req.getParameter("citta");
+        String cap       = req.getParameter("cap");
+        String telefono  = req.getParameter("telefono");
+        String nuovaPass = req.getParameter("nuovaPassword");
+        String vecchiaPass = req.getParameter("vecchiaPassword");
+
+        // Validazione base
+        if (nome == null || nome.trim().isEmpty() ||
+            cognome == null || cognome.trim().isEmpty()) {
+            req.setAttribute("errore", "Nome e cognome sono obbligatori.");
+            req.getRequestDispatcher("/WEB-INF/view/profilo.jsp")
+               .forward(req, resp);
+            return;
+        }
+
+        try {
+            UtenteDAO utenteDAO = DAOFactory.getUtenteDAO();
+
+            // Aggiorna i dati anagrafici
+            utente.setNome(nome.trim());
+            utente.setCognome(cognome.trim());
+            utente.setIndirizzo(indirizzo != null ? indirizzo.trim() : "");
+            utente.setCitta(citta != null ? citta.trim() : "");
+            utente.setCap(cap != null ? cap.trim() : "");
+            utente.setTelefono(telefono != null ? telefono.trim() : "");
+            utenteDAO.doUpdate(utente);
+
+            // Cambio password (opzionale)
+            if (nuovaPass != null && !nuovaPass.isEmpty()) {
+                if (vecchiaPass == null ||
+                    !PasswordUtil.verify(vecchiaPass, utente.getPasswordHash())) {
+                    req.setAttribute("errore",
+                        "La password attuale non è corretta.");
+                    req.getRequestDispatcher("/WEB-INF/view/profilo.jsp")
+                       .forward(req, resp);
+                    return;
+                }
+                if (nuovaPass.length() < 8) {
+                    req.setAttribute("errore",
+                        "La nuova password deve contenere almeno 8 caratteri.");
+                    req.getRequestDispatcher("/WEB-INF/view/profilo.jsp")
+                       .forward(req, resp);
+                    return;
+                }
+
+                // Aggiorna solo la password nel DB
+                String nuovoHash = PasswordUtil.hash(nuovaPass);
+                utente.setPasswordHash(nuovoHash);
+
+                // Aggiorna anche il metodo doUpdate per la password
+                // Per ora usiamo una query separata
+                java.sql.Connection con =
+                    DAOFactory.getDataSource().getConnection();
+                java.sql.PreparedStatement ps = con.prepareStatement(
+                    "UPDATE utente SET password_hash=? WHERE id=?");
+                ps.setString(1, nuovoHash);
+                ps.setInt(2, utente.getId());
+                ps.executeUpdate();
+                ps.close();
+                con.close();
+            }
+
+            // Aggiorna l'utente in sessione
+            session.setAttribute("utente", utente);
+            req.setAttribute("successo",
+                "Profilo aggiornato con successo.");
+
+        } catch (SQLException | NamingException e) {
+            req.setAttribute("errore",
+                "Errore durante il salvataggio del profilo.");
+        }
+
+        req.getRequestDispatcher("/WEB-INF/view/profilo.jsp")
+           .forward(req, resp);
+    }
+}
