@@ -12,10 +12,7 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!-- Blocca l'accesso diretto alle JSP in WEB-INF/view -->
-    <!-- Le JSP sono raggiungibili solo tramite forward delle Servlet -->
-
-    <!-- Encoding di default per tutte le richieste -->
+    <!-- Encoding UTF-8 su tutte le richieste -->
     <filter>
         <filter-name>EncodingFilter</filter-name>
         <filter-class>it.unisa.dsgames.control.EncodingFilter</filter-class>
@@ -29,16 +26,36 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!-- Sessione: 30 minuti -->
+    <!-- Sessione: 30 minuti di inattività -->
     <session-config>
         <session-timeout>30</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
     </session-config>
 
-<!-- Riferimento al DataSource JNDI -->
+    <!-- Pagine di errore personalizzate -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/view/errore404.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/view/errore403.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/view/errore500.jsp</location>
+    </error-page>
+
+    <!-- DataSource -->
     <resource-ref>
         <description>DB Connection Pool</description>
         <res-ref-name>jdbc/dsgames</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
+
 </web-app>

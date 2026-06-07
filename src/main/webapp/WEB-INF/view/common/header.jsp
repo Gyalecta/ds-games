@@ -30,15 +30,24 @@
             <a href="${pageContext.request.contextPath}/offerte">Offerte</a>
 
             <c:choose>
-                <c:when test="${not empty sessionScope.utente}">
-                    <a href="${pageContext.request.contextPath}/profilo">
-                        ${sessionScope.utente.nome}
-                    </a>
-                    <c:if test="${sessionScope.utente.admin}">
-                        <a href="${pageContext.request.contextPath}/admin/prodotti">Admin</a>
-                    </c:if>
-                    <a href="${pageContext.request.contextPath}/logout">Esci</a>
-                </c:when>
+<c:when test="${not empty sessionScope.utente}">
+    <a href="${pageContext.request.contextPath}/ordini">
+        📦 Ordini
+    </a>
+    <a href="${pageContext.request.contextPath}/wishlist">
+        🤍
+    </a>
+    <a href="${pageContext.request.contextPath}/profilo">
+        ${sessionScope.utente.nome}
+    </a>
+    <c:if test="${sessionScope.utente.admin}">
+        <a href="${pageContext.request.contextPath}/admin/prodotti"
+           class="btn-accent">
+            ⚙️ Admin
+        </a>
+    </c:if>
+    <a href="${pageContext.request.contextPath}/logout">Esci</a>
+</c:when>
                 <c:otherwise>
                     <a href="${pageContext.request.contextPath}/login">Accedi</a>
                     <a href="${pageContext.request.contextPath}/registrazione" class="btn-accent">
