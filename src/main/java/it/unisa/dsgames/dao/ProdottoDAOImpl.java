@@ -178,4 +178,16 @@ public class ProdottoDAOImpl implements ProdottoDAO {
         }
         return lista;
     }
+
+    @Override
+    public List<Prodotto> doRetrieveAllInclusiEliminati() throws SQLException {
+    List<Prodotto> lista = new ArrayList<>();
+    String sql = "SELECT * FROM prodotto ORDER BY eliminato ASC, nome ASC";
+    try (Connection con = dataSource.getConnection();
+         PreparedStatement ps = con.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) lista.add(mapRow(rs));
+    }
+    return lista;
+}
 }

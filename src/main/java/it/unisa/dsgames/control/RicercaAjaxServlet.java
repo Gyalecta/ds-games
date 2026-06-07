@@ -19,7 +19,7 @@ import java.util.List;
 
 @WebServlet("/ajax/ricerca")
 public class RicercaAjaxServlet extends HttpServlet {
-
+    private static final long serialVersionUID = 1L;
     private final Gson gson = new Gson();
 
     @Override

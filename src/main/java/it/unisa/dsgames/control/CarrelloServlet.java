@@ -19,7 +19,7 @@ import java.util.Map;
 
 @WebServlet("/carrello")
 public class CarrelloServlet extends HttpServlet {
-
+    private static final long serialVersionUID = 1L;
     // Recupera il carrello dalla sessione, lo crea se non esiste
     @SuppressWarnings("unchecked")
     private Map<Integer, ItemCarrello> getCarrello(HttpSession session) {

@@ -21,7 +21,7 @@ import java.util.Map;
 
 @WebServlet("/ajax/carrello")
 public class CarrelloAjaxServlet extends HttpServlet {
-
+    private static final long serialVersionUID = 1L;
     private final Gson gson = new Gson();
 
     @SuppressWarnings("unchecked")

@@ -16,7 +16,7 @@ import java.util.List;
 
 @WebServlet("/admin/prodotti")
 public class AdminProdottiServlet extends HttpServlet {
-
+    private static final long serialVersionUID = 1L;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -58,7 +58,7 @@ public class AdminProdottiServlet extends HttpServlet {
 
                 default: {
                     // Lista tutti i prodotti (inclusi eliminati per l'admin)
-                    List<Prodotto> prodotti = dao.doRetrieveAll();
+                    List<Prodotto> prodotti = dao.doRetrieveAllInclusiEliminati();
                     req.setAttribute("prodotti", prodotti);
                     String messaggio = req.getParameter("messaggio");
                     if (messaggio != null)
