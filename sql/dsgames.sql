@@ -106,3 +106,10 @@ INSERT INTO prodotto (nome, descrizione, categoria, piattaforma, prezzo, quantit
 ('Steam Deck',
  'Il PC gaming portatile di Valve. Gioca ai tuoi giochi Steam ovunque tu voglia.',
  'CONSOLE', 'PC', 419.99, 5, FALSE, 0);
+ 
+-- Utente di test (password: test1234)
+INSERT INTO utente (nome, cognome, email, password_hash, ruolo,
+                    indirizzo, citta, cap)
+VALUES ('Mario', 'Rossi', 'mario@test.it',
+        'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3',
+        'USER', 'Via Roma 42', 'Salerno', '84100');

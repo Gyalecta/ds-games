@@ -25,6 +25,9 @@ public interface ProdottoDAO {
     /** Restituisce l'elenco distinto delle piattaforme presenti nel catalogo */
     List<String> doRetrieveDistinctPiattaforme() throws SQLException;
 
+    /** Restituisce tutti i prodotti inclusi quelli eliminati (solo per admin) */
+    List<Prodotto> doRetrieveAllInclusiEliminati() throws SQLException;
+
     /** Inserisce un nuovo prodotto */
     void doSave(Prodotto prodotto) throws SQLException;
 

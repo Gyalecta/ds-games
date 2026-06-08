@@ -20,4 +20,7 @@ public interface UtenteDAO {
 
     /** Aggiorna i dati di un utente */
     void doUpdate(Utente utente) throws SQLException;
+
+    /** Aggiorna solo la password di un utente */
+    void doUpdatePassword(int idUtente, String nuovoHash) throws SQLException;
 }

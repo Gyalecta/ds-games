@@ -7,7 +7,7 @@ import java.io.IOException;
  * Filter che imposta l'encoding UTF-8 su tutte le richieste e risposte.
  */
 public class EncodingFilter implements Filter {
-
+    private static final long serialVersionUID = 1L;
     private String encoding = "UTF-8";
 
     @Override

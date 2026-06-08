@@ -83,40 +83,27 @@ public class ProfiloServlet extends HttpServlet {
             utente.setTelefono(telefono != null ? telefono.trim() : "");
             utenteDAO.doUpdate(utente);
 
-            // Cambio password (opzionale)
-            if (nuovaPass != null && !nuovaPass.isEmpty()) {
-                if (vecchiaPass == null ||
-                    !PasswordUtil.verify(vecchiaPass, utente.getPasswordHash())) {
-                    req.setAttribute("errore",
-                        "La password attuale non è corretta.");
-                    req.getRequestDispatcher("/WEB-INF/view/profilo.jsp")
-                       .forward(req, resp);
-                    return;
-                }
-                if (nuovaPass.length() < 8) {
-                    req.setAttribute("errore",
-                        "La nuova password deve contenere almeno 8 caratteri.");
-                    req.getRequestDispatcher("/WEB-INF/view/profilo.jsp")
-                       .forward(req, resp);
-                    return;
-                }
-
-                // Aggiorna solo la password nel DB
-                String nuovoHash = PasswordUtil.hash(nuovaPass);
-                utente.setPasswordHash(nuovoHash);
-
-                // Aggiorna anche il metodo doUpdate per la password
-                // Per ora usiamo una query separata
-                java.sql.Connection con =
-                    DAOFactory.getDataSource().getConnection();
-                java.sql.PreparedStatement ps = con.prepareStatement(
-                    "UPDATE utente SET password_hash=? WHERE id=?");
-                ps.setString(1, nuovoHash);
-                ps.setInt(2, utente.getId());
-                ps.executeUpdate();
-                ps.close();
-                con.close();
-            }
+// Cambio password (opzionale)
+if (nuovaPass != null && !nuovaPass.isEmpty()) {
+    if (vecchiaPass == null ||
+        !PasswordUtil.verify(vecchiaPass, utente.getPasswordHash())) {
+        req.setAttribute("errore",
+            "La password attuale non è corretta.");
+        req.getRequestDispatcher("/WEB-INF/view/profilo.jsp")
+           .forward(req, resp);
+        return;
+    }
+    if (nuovaPass.length() < 8) {
+        req.setAttribute("errore",
+            "La nuova password deve contenere almeno 8 caratteri.");
+        req.getRequestDispatcher("/WEB-INF/view/profilo.jsp")
+           .forward(req, resp);
+        return;
+    }
+    String nuovoHash = PasswordUtil.hash(nuovaPass);
+    utente.setPasswordHash(nuovoHash);
+    utenteDAO.doUpdatePassword(utente.getId(), nuovoHash);
+}
 
             // Aggiorna l'utente in sessione
             session.setAttribute("utente", utente);

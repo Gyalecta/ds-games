@@ -103,4 +103,15 @@ public class UtenteDAOImpl implements UtenteDAO {
             ps.executeUpdate();
         }
     }
+
+    @Override
+    public void doUpdatePassword(int idUtente, String nuovoHash) throws SQLException {
+    String sql = "UPDATE utente SET password_hash = ? WHERE id = ?";
+    try (Connection con = dataSource.getConnection();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setString(1, nuovoHash);
+        ps.setInt(2, idUtente);
+        ps.executeUpdate();
+    }
+}
 }

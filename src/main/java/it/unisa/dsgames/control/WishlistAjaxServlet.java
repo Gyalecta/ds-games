@@ -18,7 +18,7 @@ import java.sql.SQLException;
 
 @WebServlet("/ajax/wishlist")
 public class WishlistAjaxServlet extends HttpServlet {
-
+    private static final long serialVersionUID = 1L;
     private final Gson gson = new Gson();
 
     @Override
