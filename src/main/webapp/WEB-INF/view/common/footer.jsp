@@ -3,13 +3,15 @@
 <footer>
     <div class="footer-inner">
         <div class="footer-col">
-            <h4>DS Games</h4>
-            <p style="font-size:0.9rem; line-height:1.6;">
-                La tua piattaforma e-commerce per console e videogiochi.
+            <div class="footer-brand">DS<span>Games</span></div>
+            <p style="font-size:0.82rem; line-height:1.7; max-width:260px;">
+                Piattaforma e-commerce dedicata alla vendita di console e videogiochi.
+                Ampia scelta, prezzi competitivi, spedizione rapida.
             </p>
         </div>
         <div class="footer-col">
             <h4>Catalogo</h4>
+            <a href="${pageContext.request.contextPath}/catalogo">Tutti i prodotti</a>
             <a href="${pageContext.request.contextPath}/catalogo?categoria=CONSOLE">Console</a>
             <a href="${pageContext.request.contextPath}/catalogo?categoria=VIDEOGIOCO">Videogiochi</a>
             <a href="${pageContext.request.contextPath}/offerte">Offerte</a>
@@ -18,19 +20,20 @@
             <h4>Account</h4>
             <a href="${pageContext.request.contextPath}/login">Accedi</a>
             <a href="${pageContext.request.contextPath}/registrazione">Registrati</a>
-            <a href="${pageContext.request.contextPath}/profilo">Il mio profilo</a>
             <a href="${pageContext.request.contextPath}/ordini">I miei ordini</a>
+            <a href="${pageContext.request.contextPath}/wishlist">Lista desideri</a>
         </div>
         <div class="footer-col">
-            <h4>Info</h4>
+            <h4>Assistenza</h4>
             <a href="#">Chi siamo</a>
-            <a href="#">Spedizioni</a>
+            <a href="#">Spedizioni e resi</a>
             <a href="#">Privacy Policy</a>
             <a href="#">Contatti</a>
         </div>
     </div>
     <div class="footer-bottom">
-        &copy; 2026 DS Games — Progetto TSW, Università degli Studi di Salerno
+        <span>&copy; 2026 DSGames &mdash; Tutti i diritti riservati</span>
+        <span>Progetto TSW &mdash; Università degli Studi di Salerno</span>
     </div>
 </footer>
 
