@@ -23,13 +23,13 @@
             <a href="${pageContext.request.contextPath}/ordini">I miei ordini</a>
             <a href="${pageContext.request.contextPath}/wishlist">Lista desideri</a>
         </div>
-        <div class="footer-col">
-            <h4>Assistenza</h4>
-            <a href="#">Chi siamo</a>
-            <a href="#">Spedizioni e resi</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Contatti</a>
-        </div>
+		<div class="footer-col">
+    		<h4>Assistenza</h4>
+    			<a href="${pageContext.request.contextPath}/chisiamo">Chi siamo</a>
+    			<a href="${pageContext.request.contextPath}/spedizioni">Spedizioni e resi</a>
+    			<a href="${pageContext.request.contextPath}/privacy">Privacy Policy</a>
+    			<a href="${pageContext.request.contextPath}/contatti">Contatti</a>
+		</div>
     </div>
     <div class="footer-bottom">
         <span>&copy; 2026 DSGames &mdash; Tutti i diritti riservati</span>

@@ -125,17 +125,14 @@
                         </button>
                     </c:if>
 
-                    <c:if test="${not empty sessionScope.utente && not empty prodotto.id}">
-                        <button class="btn"
-                                style="border:1px solid var(--color-border);"
-                                data-product-id="${prodotto.id}"
-                                data-in-wishlist="false"
-                                title="Aggiungi alla lista desideri"
-                                aria-label="Aggiungi alla lista desideri"
-                                onclick="toggleWishlist(this)">
-                            🤍
-                        </button>
-                    </c:if>
+					<c:if test="${not empty sessionScope.utente}">
+    					<button class="wishlist-btn"
+            				data-in-wishlist="false"
+           					title="Aggiungi alla lista desideri"
+            				onclick="toggleWishlist(${prodotto.id}, this)">
+        					+ Lista desideri
+    					</button>
+					</c:if>
                 </div>
 
                 <!-- Descrizione -->
