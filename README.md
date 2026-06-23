@@ -51,9 +51,13 @@ Apri `[TOMCAT_HOME]/conf/context.xml` e aggiungi dentro `<Context>`:
 
 **3. Deploy**
 
-_Con Eclipse:_ importa come Maven project, aggiungi Tomcat 9 come server, configura il DataSource anche nel `context.xml` di Eclipse (`Servers/Tomcat v9.0.../context.xml`), e avvia.
+*Con il WAR:* copia `DSGames.war` (nella root della repo) in `[TOMCAT_HOME]/webapps/` e avvia Tomcat.
+Il WAR include già il `META-INF/context.xml` preconfigurato con `username=root` e `password=root`.
+Se MySQL ha credenziali diverse, modificate il context.xml prima del deploy.
 
-_Con il WAR:_ copia `target/DSGames.war` in `[TOMCAT_HOME]/webapps/` e avvia Tomcat.
+*Con Eclipse:* importa come Maven project, aggiungi Tomcat 9 come server,
+configura il DataSource nel `context.xml` di Eclipse
+(`Servers/Tomcat v9.0.../context.xml`), e avvia.
 
 **4. Apri il browser**
 
@@ -83,7 +87,3 @@ src/main/webapp/
 ├── scripts/        → JavaScript
 └── images/         → Immagini statiche
 ```
-
-## Note
-
-Il file `META-INF/context.xml` con le credenziali del database non è incluso nel repository per ovvie ragioni — va creato manualmente seguendo il punto 2 qui sopra.
