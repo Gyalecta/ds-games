@@ -119,7 +119,7 @@
                         <button class="btn btn-primary"
                                 style="flex:1; text-align:center;"
                                 data-product-id="${prodotto.id}"
-                                onclick="aggiungiAlCarrello(this)"
+                                onclick="aggiungiAlCarrello(${prodotto.id}, this)"
                                 aria-label="Aggiungi ${prodotto.nome} al carrello">
                             🛒 Aggiungi al carrello
                         </button>
